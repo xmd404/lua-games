@@ -15,6 +15,10 @@ function love.load()
   -- override default load behaviour:
   -- adjust texture of graphics (vintage but readable)
   love.graphics.setDefaultFilter('nearest', 'nearest')
+  -- seed random number generator to current time
+  -- this guarantees that calls to random are truly random :)
+  math.randomseed(os.time())
+
   -- add font objects
   smallFont = love.graphics.newFont('font.ttf', 8)
   scoreFont = love.graphics.newFont('font.ttf', 32)

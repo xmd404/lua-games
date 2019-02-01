@@ -8,10 +8,15 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
--- init game, override default load behaviour
+-- init game
 function love.load()
+  -- override default load behaviour:
   -- adjust texture of graphics (vintage but readable)
   love.graphics.setDefaultFilter('nearest', 'nearest')
+  -- add retro font object, we can use for any text
+  smallFont = love.graphics.newFont('font.ttf', 8)
+  -- set active font to smallFont
+  love.graphics.setFont(smallFont)
   -- init virtual resolution
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
     fullscreen = false,
@@ -31,11 +36,13 @@ end
 function love.draw()
   -- start virtual animation
   push:apply('start')
-  -- draw to screen
+  -- clear screen with a specific color
+  love.graphics.clear(40, 45, 52, 255)
+  -- draw welcome text top center of screen
   love.graphics.printf(
     'Hello Pong',
-    0,
-    VIRTUAL_HEIGHT / 2 - 6,
+    0, 
+    20,
     VIRTUAL_WIDTH,
     'center'
   )

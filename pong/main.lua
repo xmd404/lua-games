@@ -1,6 +1,7 @@
 --[[
-  Pong by xmd404 (http://xavierduncan.com)
+  Pong by @xmd404 (http://xavierduncan.com)
 ]]
+
 push = require 'push'
 
 WINDOW_WIDTH = 1280
@@ -18,6 +19,15 @@ function love.load()
     resizable = false,
     vsync = true
   })
+end
+
+--[[
+  quit game on 'escape' keypress
+]]
+function love.keypressed(key)
+  if key == 'escape' then
+    love.event.quit()
+  end
 end
 
 --[[

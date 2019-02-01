@@ -30,27 +30,41 @@ function love.load()
     resizable = false,
     vsync = true
   })
-  -- init score
-  playerOneScore = 0
-  playerTwoScore = 0
-  -- init paddle position on Y axis
-  playerOnePosition = 30
-  playerTwoPosition = VIRTUAL_HEIGHT - 50
+  -- init player score
+  p1Score = 0
+  p2Score = 0
+  -- init player position on Y axis
+  p1Position = 30
+  p2Position = VIRTUAL_HEIGHT - 50
+  -- init velocity & position for ball on start
+  ballX = VIRTUAL_WIDTH / 2 - 2
+  ballY = VIRTUAL_HEIGHT / 2 -3
+  -- randomize direction of ball between left and right number
+  ballDX = math.random(2) == 1 and 100 or -100
+  ballDY = math.random(-50, 50)
+  -- game state var
+  gameState = 'start'
 end
 
 -- game controls
+-- max/min functions keep paddles within screen
 function love.update(dt)
-  -- player One (left)
+  -- p1 (left)
   if love.keyboard.isDown('w') then
-    playerOnePosition = playerOnePosition + -PADDLE_SPEED * dt
+    p1Position = math.max(0, p1Position + -PADDLE_SPEED * dt)
   elseif love.keyboard.isDown('s') then
-    playerOnePosition = playerOnePosition + PADDLE_SPEED * dt
+    p1Position = math.min(VIRTUAL_HEIGHT - 20, p1Position + PADDLE_SPEED * dt)
   end
-  -- player Two (right)
+  -- p2 (right)
   if love.keyboard.isDown('up') then
-    playerTwoPosition = playerTwoPosition + -PADDLE_SPEED * dt
+    p2Position = math.max(0, p2Position + -PADDLE_SPEED * dt)
   elseif love.keyboard.isDown('down') then
-    playerTwoPosition = playerTwoPosition + PADDLE_SPEED * dt
+    p2Position = math.min(VIRTUAL_HEIGHT - 20, p2Position + PADDLE_SPEED * dt)
+  end
+  -- update ball position if we're in 'play' state
+  if gameState == 'play' then
+    ballX = ballX + ballDX * dt
+    ballY = ballY + ballDY * dt
   end
 end
 
@@ -58,6 +72,18 @@ end
 function love.keypressed(key)
   if key == 'escape' then
     love.event.quit()
+  elseif key == 'enter' or key == 'return' then
+    if gameState == 'start' then
+      gameState = 'play'
+    else
+      gameState = 'start'
+      -- init velocity & position for ball on start
+      ballX = VIRTUAL_WIDTH / 2 - 2
+      ballY = VIRTUAL_HEIGHT / 2 -3
+      -- randomize direction of ball between left and right number
+      ballDX = math.random(2) == 1 and 100 or -100
+      ballDY = math.random(-50, 50) * 1.5
+    end
   end
 end
 
@@ -79,21 +105,21 @@ function love.draw()
   -- draw player score left & right center of screen
   love.graphics.setFont(scoreFont)
   love.graphics.print(
-    tostring(playerOneScore),
+    tostring(p1Score),
     VIRTUAL_WIDTH / 2 - 50,
     VIRTUAL_HEIGHT / 3
   )
   love.graphics.print(
-    tostring(playerTwoScore),
+    tostring(p2Score),
     VIRTUAL_WIDTH / 2 + 30,
     VIRTUAL_HEIGHT / 3
   )
   -- render 1st paddle (left side)
-  love.graphics.rectangle('fill', 10, playerOnePosition, 5, 20)
+  love.graphics.rectangle('fill', 10, p1Position, 5, 20)
   -- render 2nd paddel (right side)
-  love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, playerTwoPosition, 5, 20)
+  love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, p2Position, 5, 20)
   -- render ball (center)
-  love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+  love.graphics.rectangle('fill', ballX, ballY, 4, 4)
   -- end animation
   push:apply('end')
 end

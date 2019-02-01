@@ -1,10 +1,10 @@
 -- Pong by @xmd404 (http://xavierduncan.com)
 -- init global variables
 push = require 'push'
-
+-- set app window
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
-
+-- set game window
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 

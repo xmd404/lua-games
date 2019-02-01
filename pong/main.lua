@@ -7,14 +7,17 @@ WINDOW_HEIGHT = 720
 -- set game window
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
+-- set paddle speed
+PADDLE_SPEED = 200
 
 -- init game
 function love.load()
   -- override default load behaviour:
   -- adjust texture of graphics (vintage but readable)
   love.graphics.setDefaultFilter('nearest', 'nearest')
-  -- add retro font object, we can use for any text
+  -- add font objects
   smallFont = love.graphics.newFont('font.ttf', 8)
+  scoreFont = love.graphics.newFont('font.tff', 32)
   -- set active font to smallFont
   love.graphics.setFont(smallFont)
   -- init virtual resolution
@@ -23,6 +26,12 @@ function love.load()
     resizable = false,
     vsync = true
   })
+  -- init score
+  playerOneScore = 0
+  playerTwoScore = 0
+  -- init paddle position on Y axis
+  playerOnePosition = 30
+  playerTwoPosition = VIRTUAL_HEIGHT - 50
 end
 
 -- quit game on 'escape' keypress

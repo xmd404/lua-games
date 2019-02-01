@@ -10,6 +10,8 @@ VIRTUAL_HEIGHT = 243
 
 -- init game, override default load behaviour
 function love.load()
+  -- adjust texture of graphics (vintage but readable)
+  love.graphics.setDefaultFilter('nearest', 'nearest')
   -- init virtual resolution
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
     fullscreen = false,

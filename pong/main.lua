@@ -17,7 +17,7 @@ function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
   -- add font objects
   smallFont = love.graphics.newFont('font.ttf', 8)
-  scoreFont = love.graphics.newFont('font.tff', 32)
+  -- scoreFont = love.graphics.newFont('font.tff', 32)
   -- set active font to smallFont
   love.graphics.setFont(smallFont)
   -- init virtual resolution
@@ -32,6 +32,22 @@ function love.load()
   -- init paddle position on Y axis
   playerOnePosition = 30
   playerTwoPosition = VIRTUAL_HEIGHT - 50
+end
+
+-- game controls
+function love.update(dt)
+  -- player One (left)
+  if love.keyboard.isDown('w') then
+    playerOnePosition = playerOnePosition + -PADDLE_SPEED * dt
+  elseif love.keyboard.isDown('s') then
+    playerOnePosition = playerOnePosition + PADDLE_SPEED * dt
+  end
+  -- player Two (right)
+  if love.keyboard.isDown('up') then
+    playerTwoPosition = playerTwoPosition + -PADDLE_SPEED * dt
+  elseif love.keyboard.isDown('down') then
+    playerTwoPosition = playerTwoPosition + PADDLE_SPEED * dt
+  end
 end
 
 -- quit game on 'escape' keypress

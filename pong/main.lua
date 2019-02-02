@@ -42,7 +42,7 @@ function love.load()
   -- randomize direction of ball between left and right number
   ballDX = math.random(2) == 1 and 100 or -100
   ballDY = math.random(-50, 50)
-  -- game state var
+  -- init game state
   gameState = 'start'
 end
 

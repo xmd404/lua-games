@@ -33,6 +33,8 @@ function love.load()
     fullscreen = false,
     resizable = true
   })
+
+  love.keyboard.keysPressed = {}
 end
 
 -- dynamic resizing of game canvas
@@ -42,8 +44,19 @@ end
 
 -- key inputs
 function love.keypressed(key)
+  love.keyboard.keysPressed[key] = true
+
   if key == 'escape' then
     love.event.quit()
+  end
+end
+
+-- keeps track of which key was pressed
+function love.keyboard.wasPressed(key)
+  if love.keyboard.keysPressed[key] then
+    return true
+  else 
+    return false
   end
 end
 
@@ -55,6 +68,8 @@ function love.update(dt)
     % VIRTUAL_WIDTH
 
     bird:update(dt)
+
+    love.keyboard.keysPressed = {}
 end
 
 -- render to screen

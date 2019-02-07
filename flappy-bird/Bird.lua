@@ -1,6 +1,7 @@
 Bird = Class{}
 
 local GRAVITY = 25
+local ANTI_GRAVITY = -5
 
 function Bird:init()
   -- init bird (sprite)
@@ -15,7 +16,13 @@ function Bird:init()
 end
 
 function Bird:update(dt)
+  -- apply gravity to velocity
   self.dy = self.dy + GRAVITY * dt
+  -- input handling for jump
+  if love.keyboard.wasPressed('space') then
+    self.dy = ANTI_GRAVITY
+  end
+  -- apply current velocity to Y position
   self.y = self.y + self.dy
 end
 

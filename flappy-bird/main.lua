@@ -23,7 +23,14 @@ function love.load()
   })
 end
 
--- dynamic game canvas
+-- dynamic resizing of game canvas
 function love.resize(w, h)
   push:resize(w, h)
+end
+
+-- key inputs
+function love.keypressed(key)
+  if key == 'escape' then
+    love.event.quit()
+  end
 end

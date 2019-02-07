@@ -53,6 +53,8 @@ function love.update(dt)
     -- ground.png is consistent enough to not need a loop point
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
     % VIRTUAL_WIDTH
+
+    bird:update(dt)
 end
 
 -- render to screen
